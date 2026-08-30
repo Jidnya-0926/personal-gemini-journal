@@ -1,181 +1,393 @@
-# Personal Gemini Journal
+<div align="center">
 
-A secure, production-ready AI journaling and personal reflection application built with **Google Gemini**, **Firebase Authentication (Google Sign-In)**, **Cloud Firestore (Strict User Isolation)**, **Express**, and **React**.
+# 🧠 Personal Gemini Journal
+
+### Your Private AI Space for Reflection, Insight & Personal Growth
+
+**Write. • Reflect. • Understand. • Grow.**
+
+<br>
+
+<a href="https://personal-journal-491827.ai.studio">
+<img src="https://img.shields.io/badge/🚀_OPEN_LIVE_APP-0A84FF?style=for-the-badge&labelColor=111111" />
+</a>
+&nbsp;
+<a href="https://github.com/Jidnya-0926/personal-gemini-journal">
+<img src="https://img.shields.io/badge/💻_SOURCE_CODE-24292F?style=for-the-badge&logo=github&logoColor=white" />
+</a>
+
+<br><br>
+
+<img width="850" src="./img/thumbnail.png" alt="Personal Gemini Journal" />
+
+</div>
 
 ---
 
-## 1. Project Overview & Architecture
+## 📖 Overview
 
-Personal Gemini Journal provides a private, focused space for self-reflection, thought untangling, creative brainstorming, and personal growth. Every interaction is securely analyzed by Gemini to provide empathetic reflections and automated structured session summaries (identifying core themes, emotional tone, breakthrough insights, and actionable self-care items).
+**Personal Gemini Journal** is a secure, AI-powered journaling and reflection application built with **Google Gemini, Firebase Authentication, Cloud Firestore, Express, React, and Google Cloud Run**.
 
-### Architectural Boundaries
+Instead of simply storing journal entries, Gemini helps users:
 
+* 💭 Explore their thoughts
+* 🧠 Understand their reflections
+* 🔍 Identify recurring themes
+* 💡 Discover meaningful insights
+* 🎯 Turn reflections into actionable steps
+* 📈 Recognize personal growth signals
+* 💬 Continue contextual multi-turn conversations
+
+### Core Experience
+
+**✍️ Write → 🧠 Reflect → 💡 Understand → 🎯 Act**
+
+---
+
+## 🎯 Problem
+
+Traditional journaling apps mainly store what users write but provide limited help in understanding it.
+
+Users may struggle to:
+
+* Understand complicated thoughts
+* Recognize recurring patterns
+* Turn reflections into actions
+* Track personal growth
+* Ask meaningful follow-up questions
+* Keep personal reflections private
+
+> **Journaling stores the thought. AI helps the user understand it.**
+
+---
+
+## 💡 Solution
+
+Personal Gemini Journal combines a **private journal with an AI reflection companion**.
+
+Users can create a reflection session, have a contextual conversation with Gemini, save the session, and generate structured insights from the complete reflection.
+
+---
+
+## ✨ Key Features
+
+### 🔐 Secure Authentication
+
+* Firebase Authentication
+* Google Sign-In
+* User-specific Firebase UID
+* Private user data isolation
+
+### 💬 Multi-Turn Gemini Conversations
+
+Users can continue contextual conversations with Gemini throughout a reflection session.
+
+### 💾 Persistent Journal Sessions
+
+Sessions are stored in Cloud Firestore and can be:
+
+* Created
+* Reopened
+* Continued
+* Accessed after refresh
+* Accessed after signing back in
+
+### 🧠 Reflection Insights
+
+Gemini generates:
+
+* 💡 **Key Insight** — central realization or lesson
+* 💭 **Emotional Pattern** — strictly non-clinical observation
+* 🔁 **Recurring Theme**
+* 🎯 **Action for Tomorrow**
+* 🌱 **Growth Signal**
+
+### ✨ Session Synthesis
+
+Provides a higher-level view of the complete session:
+
+* Focus Title
+* Key Themes
+* Core Insight
+* Perspective
+* Actionable Takeaways
+
+### 🔎 Reflection Search
+
+Search previous reflections by keywords such as projects, learning, work, or stress.
+
+### 🏷️ Mood Filtering
+
+Organize reflections using categories such as:
+**Reflective, Grateful, Calm, Energized, Creative, Challenged, Anxious, Accomplished.**
+
+### 📋 Action Copy
+
+Copy the generated **Action for Tomorrow** with one click.
+
+### 📤 Journal Export
+
+Export personal journal data as a JSON archive.
+
+---
+
+## 🏗️ Architecture
+
+<div align="center">
+<img width="850" src="./img/Architecture.jpg" alt="Personal Gemini Journal Architecture" />
+</div>
+
+```text
+                    USER
+                     │
+                     ▼
+              React + TypeScript
+                     │
+          ┌──────────┴──────────┐
+          ▼                     ▼
+   Firebase Auth          Cloud Firestore
+   Google Sign-In         User Sessions
+          │               Interactions
+          │                Insights
+          ▼                     │
+      Express Backend ◄─────────┘
+          │
+          ▼
+     Google Gemini
+   ┌─────────────────┐
+   │ Multi-Turn Chat │
+   │ Insights        │
+   │ Synthesis       │
+   └─────────────────┘
+          │
+          ▼
+     Google Cloud Run
 ```
-┌────────────────────────────────────────────────────────┐
-│                   Client Browser                       │
-│  - React 19 + Tailwind CSS + Lucide Icons              │
-│  - Firebase Auth (Google Sign-In Popup)                │
-│  - Direct Owner-Bound Cloud Firestore Access           │
-└──────────────┬──────────────────────────┬──────────────┘
-               │                          │
- (Firestore Rules Enforced)         (Encrypted API)
-               │                          │
-               ▼                          ▼
-┌───────────────────────────┐  ┌──────────────────────────┐
-│      Cloud Firestore      │  │     Express Backend      │
-│  /users/{uid}/sessions/*  │  │  - /api/chat             │
-│  /users/{uid}/            │  │  - /api/summarize        │
-│    interactions/*         │  │  - /api/insights         │
-│  /users/{uid}/insights    │  │  - Model Fallback Engine │
-└───────────────────────────┘  └──────────┬───────────────┘
-                                          │ (Server Secrets Only)
-                                          ▼
-                               ┌──────────────────────────┐
-                               │     Google Gemini API    │
-                               │  - Multi-Turn Reflection │
-                               │  - Structured Synthesis  │
-                               └──────────────────────────┘
+
+---
+
+## 🔄 Workflow
+
+<div align="center">
+<img width="850" src="./img/workflow.jpg" alt="Personal Gemini Journal Workflow" />
+</div>
+
+```text
+1. Google Authentication
+          ↓
+2. Private Dashboard
+          ↓
+3. Create Reflection Session
+          ↓
+4. Write Reflection
+          ↓
+5. Gemini Conversation
+          ↓
+6. Save Session to Firestore
+          ↓
+7. Generate Insights + Synthesis
+          ↓
+8. Actionable Takeaways
+          ↓
+9. Journal Remains Available
 ```
 
 ---
 
-## 2. Technology Stack
+## 🔐 Security
 
-- **Frontend**: React 19, TypeScript, Tailwind CSS, Lucide React, React Markdown.
-- **Backend / API**: Node.js, Express, tsx, esbuild.
-- **AI / LLM Engine**: `@google/genai` with automatic fallback sequence (`gemini-2.5-flash` → `gemini-3.1-flash-lite` → `gemini-flash-latest` → `gemini-3.7-flash`).
-- **Identity & Authentication**: Firebase Authentication (Google OAuth).
-- **Database & Persistence**: Google Cloud Firestore with owner-isolated security partitions (`/users/{uid}/*`).
-- **Hosting / Deployment Target**: Google Cloud Run.
+The application uses multiple security boundaries:
+
+* **Firebase Authentication** for identity
+* **Firebase UID-based data isolation**
+* **Firestore owner-bound security rules**
+* **Gemini API key stored server-side**
+* **Environment variables for secrets**
+* **`.gitignore` protection**
+* **Request and JSON validation**
+* **Input length limits**
+* **Server-side sanitization**
+* **AI fallback handling**
+
+Firestore data follows the user-specific structure:
+
+```text
+/users/{uid}/sessions
+/users/{uid}/interactions
+/users/{uid}/insights
+```
+
+The Gemini API key is never exposed in frontend source code.
 
 ---
 
-## 3. Threat Model & Security Architecture
+## 🧠 Technology Stack
 
-| Risk Zone | Attack Vector | Enforced Mitigation |
-| :--- | :--- | :--- |
-| **Input Surfaces** | Malicious injection, oversized payloads | Server-side request sanitization, length caps (4,000 chars/turn), and strict JSON payload validation. |
-| **Authentication** | Spoofed identity or unauthenticated access | Authenticated Firebase Google Sign-In with validated UID context. |
-| **Database Isolation** | Cross-user data harvesting | Firestore Security Rules strictly enforcing `request.auth.uid == userId` on `/users/{userId}/*`. |
-| **Secret Management** | Gemini API key exposure | API keys are kept strictly on the trusted Express server (`process.env.GEMINI_API_KEY`) and never bundled in client JavaScript. |
-| **AI Resilience** | Rate limits or 429/500 outages | Reusable `generateContentWithFallback` function dynamically cascading through alternative models. |
+| Layer          | Technology              |
+| -------------- | ----------------------- |
+| Frontend       | React 19                |
+| Language       | TypeScript              |
+| Styling        | Tailwind CSS            |
+| Build Tool     | Vite                    |
+| Backend        | Node.js + Express       |
+| AI             | Google Gemini           |
+| Gemini SDK     | `@google/genai`         |
+| Authentication | Firebase Authentication |
+| Database       | Cloud Firestore         |
+| Deployment     | Google Cloud Run        |
+| Bundler        | esbuild                 |
 
 ---
 
-## 4. Firestore Security Rules
+## 📁 Project Structure
 
-Deploy the following owner-bound rules in your Firebase project:
-
-```javascript
-rules_version = '2';
-
-service cloud.firestore {
-  match /databases/{database}/documents {
-    // User profile and private subcollections
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-      
-      // User journal sessions
-      match /sessions/{sessionId} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
-      }
-      
-      // User interactions & reflection turns
-      match /interactions/{interactionId} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
-      }
-    }
-  }
-}
+```text
+personal-gemini-journal/
+├── src/
+│   ├── components/
+│   ├── context/
+│   ├── lib/
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── img/
+│   ├── thumbnail.png
+│   ├── Architecture.jpg
+│   └── workflow.jpg
+├── server.ts
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+├── .env.example
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-## 5. Local Setup & Configuration
+## ⚙️ Installation
 
 ### Prerequisites
-- Node.js 20+
-- npm or bun
-- A Google Cloud / Firebase project with Firestore and Google Sign-In enabled.
 
-### Installation
+* Node.js 20+
+* npm
+* Firebase / Google Cloud project
+* Firebase Authentication with Google Sign-In
+* Cloud Firestore
+* Gemini API access
 
-1. Clone the repository and install dependencies:
-   ```bash
-   npm install
-   ```
+### 1. Clone
 
-2. Configure environment variables in `.env` or `.env.local` (see `.env.example`):
-   ```env
-   GEMINI_API_KEY="your-gemini-api-key"
-   PORT=3000
-   NODE_ENV="development"
-   
-   # Optional: Client-side Firebase credentials for standalone deployments
-   VITE_FIREBASE_API_KEY="your-firebase-api-key"
-   VITE_FIREBASE_AUTH_DOMAIN="your-project-id.firebaseapp.com"
-   VITE_FIREBASE_PROJECT_ID="your-project-id"
-   VITE_FIREBASE_STORAGE_BUCKET="your-project-id.firebasestorage.app"
-   VITE_FIREBASE_MESSAGING_SENDER_ID="your-sender-id"
-   VITE_FIREBASE_APP_ID="your-app-id"
-   ```
+```bash
+git clone https://github.com/Jidnya-0926/personal-gemini-journal.git
+cd personal-gemini-journal
+```
 
-3. If running locally with `firebase-applet-config.json`, ensure it is present in the root directory (note: this file is automatically excluded from git by `.gitignore`).
+### 2. Install
 
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:3000` in your browser.
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+
+Create `.env.local` using `.env.example`.
+
+```env
+GEMINI_API_KEY="your-gemini-api-key"
+
+PORT=3000
+NODE_ENV="development"
+
+VITE_FIREBASE_API_KEY="your-firebase-api-key"
+VITE_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
+VITE_FIREBASE_PROJECT_ID="your-project-id"
+VITE_FIREBASE_STORAGE_BUCKET="your-project.firebasestorage.app"
+VITE_FIREBASE_MESSAGING_SENDER_ID="your-sender-id"
+VITE_FIREBASE_APP_ID="your-app-id"
+```
+
+**Never commit real credentials or service-account files to GitHub.**
+
+### 4. Run
+
+```bash
+npm run dev
+```
+
+Open:
+
+```text
+http://localhost:3000
+```
 
 ---
 
-## 6. Google Cloud Run Deployment
+## ☁️ Deployment
 
-### Secret Manager Setup
-Create and grant access to the Gemini API Key secret in Google Cloud Secret Manager:
-
-```bash
-# 1. Create Secret
-gcloud secrets create GEMINI_API_KEY --data-file=- <<< "your-gemini-api-key"
-
-# 2. Grant Secret Accessor permission to the default compute service account
-PROJECT_NUMBER=$(gcloud projects describe $(gcloud config get-value project) --format="value(projectNumber)")
-gcloud secrets add-iam-policy-binding GEMINI_API_KEY \
-    --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com" \
-    --role="roles/secretmanager.secretAccessor"
-```
-
-### Cloud Run Deployment Command
+The application is designed for **Google Cloud Run**.
 
 ```bash
-# Build & Deploy to Cloud Run
 gcloud run deploy personal-gemini-journal \
   --source . \
   --region us-central1 \
   --allow-unauthenticated \
   --set-secrets="GEMINI_API_KEY=GEMINI_API_KEY:latest" \
   --port 3000
-
-# Attach challenge campaign tracking label (if participating)
-gcloud run services update personal-gemini-journal \
-  --update-labels=dev-tutorial=cloud-run-ai-challenge \
-  --region us-central1
 ```
 
 ---
 
-## 7. Testing & Verification Checklist
+## 🌐 Live Application
 
-1. **Landing Page**: Verify clean typography, responsive layout, feature pillars, and Google sign-in button.
-2. **Google Sign-In**: Click "Continue with Google", complete authentication, and verify seamless redirect to the dashboard.
-3. **Private Dashboard**: Verify user display name, avatar, and security badge in the navigation bar.
-4. **Multi-Turn Gemini Dialogue**: Submit a reflection prompt (e.g., "Help me reflect on today's decisions"). Verify empathetic AI response rendering with Markdown.
-5. **Firestore Persistence**: Verify the interaction is saved under `/users/{uid}/interactions` with a real-time "Isolated & Saved" status indicator.
-6. **Session Synthesis & Reflection Insights**:
-   - Click "Synthesis" to generate high-level session takeaways.
-   - Click "Reflection Insights" to generate 5 deep analysis points: **Key Insight**, **Emotional Pattern** (strictly non-clinical observation), **Recurring Theme**, **Action for Tomorrow** (with 1-click clipboard copy), and **Growth Signal**.
-7. **Insight Persistence & Regeneration**: Verify insights are saved under `/users/{uid}/sessions/{sessionId}` and can be regenerated or reviewed upon reloading.
-8. **Reload Persistence**: Refresh the browser page. Confirm all sessions, insights, and previous interactions reload intact.
-9. **Sign Out & Sign Back In**: Sign out, sign in with the same account, and verify all past data remains accessible.
-10. **Data Export**: Click "Export Personal Journal" and verify the full JSON archive downloads with all sessions and interactions.
+🚀 **Live App:**
+https://personal-journal-491827.ai.studio
+
+💻 **Source Code:**
+https://github.com/Jidnya-0926/personal-gemini-journal
+
+---
+
+## 🏆 Challenge Alignment
+
+Built for the **Google Cloud Run AI Challenge**.
+
+The project demonstrates:
+
+* 🧠 Google Gemini integration
+* 🔐 Firebase Authentication
+* 🔑 Google Sign-In
+* 🗄️ Cloud Firestore
+* 👤 User data isolation
+* 🔒 Secure API-key handling
+* 💬 Multi-turn AI interaction
+* ✨ Structured AI insights
+* 📊 Session synthesis
+* ☁️ Cloud Run deployment
+
+---
+
+## 🚀 Future Improvements
+
+* 📊 Personal growth analytics
+* 📈 Mood and reflection trends
+* 🧠 Long-term pattern detection
+* 🔍 Semantic journal search
+* 📱 Improved mobile experience
+* 🔔 External notifications
+* 📅 Daily reflection reminders
+* 🤖 More personalized recommendations
+
+---
+
+<div align="center">
+
+## 🧠 Personal Gemini Journal
+
+### Write. Reflect. Understand. Grow.
+
+**Built with ❤️ using Google Gemini · React · Firebase · Express · Cloud Run**
+
+⭐ If you like the project, consider giving it a star! ⭐
+
+</div>
